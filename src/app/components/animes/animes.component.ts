@@ -70,6 +70,20 @@ export class AnimesComponent implements OnInit {
       //this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
+  /**
+   * Metodo que permite precargar el objeto de anime a mostrarse en la ventana
+   * modal para actualizarse.
+   * @param animeSeleccionado anime seleccionado por el usuario. 
+   */
+  cargarAnime(animeSeleccionado: Anime, content: any) {
+    this.anime = new Anime();
+    this.anime.id = animeSeleccionado.id;
+    this.anime.nombre = animeSeleccionado.nombre;
+    this.anime.anio = animeSeleccionado.anio;
+    this.anime.fechaCreacion = animeSeleccionado.fechaCreacion;
+
+    this.open(content);
+  }
 
   /**
    * Metodo que permite guardar un anime.
@@ -77,14 +91,23 @@ export class AnimesComponent implements OnInit {
    */
   guardarAnime(data: any) {
 
-    this.anime = new Anime();
-    this.anime.nombre = data.nombre;
-    this.anime.anio = data.anio;
-
-    this.animesService.guardarAnime(this.anime).subscribe(response => {
-
-      this.modalReference.close();
-      this.consultarAnimes();
-    });
+    if (!this.anime.id) {
+      this.anime = new Anime();
+      this.anime.nombre = data.nombre;
+      this.anime.anio = data.anio;
+  
+      this.animesService.guardarAnime(this.anime).subscribe(response => {
+  
+        this.modalReference.close();
+        this.consultarAnimes();
+      }); 
+    } else {
+      this.animesService.actualizarAnime(this.anime).subscribe(response => {
+        this.modalReference.close();
+        
+        this.consultarAnimes();
+        this.anime = new Anime();
+      });
+    }
   }
 }

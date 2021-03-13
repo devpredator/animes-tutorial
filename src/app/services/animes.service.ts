@@ -35,4 +35,12 @@ export class AnimesService {
   guardarAnime(anime: Anime) : Observable<Anime> {
     return this.httpClient.post<Anime>(`${this.baseUrl}/guardarAnime`, anime, {headers: this.headers});
   }
+
+  /**
+   * Funcion que permite consumir el servicio para actualizar animes.
+   * @param anime anime a actualizar.
+   */
+  actualizarAnime(anime: Anime) : Observable<Anime> {
+    return this.httpClient.put<Anime>(`${this.baseUrl}/actualizarAnime`, anime, {headers: this.headers});
+  }
 }
