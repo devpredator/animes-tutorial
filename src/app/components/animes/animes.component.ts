@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Anime } from 'src/app/model/Anime';
 import { AnimesService } from 'src/app/services/animes.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-animes',
@@ -109,5 +110,34 @@ export class AnimesComponent implements OnInit {
         this.anime = new Anime();
       });
     }
+  }
+  /**
+   * Metodo que permite mostrar la ventana de confirmacion para eliminar un registro de anime.
+   * @param anime 
+   */
+  mostrarVentanaEliminar(anime: Anime) {
+    Swal.fire({
+      title: "Confirmación",
+      text: `¿Estás seguro de eliminar el anime ${anime.nombre}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.animesService.eliminarAnime(anime.id).subscribe(response => {
+          this.consultarAnimes();
+
+          Swal.fire(
+            'Ok!',
+            `El anime ${anime.nombre} fué eliminado exitósamente`,
+            'success'
+          )
+        });
+      }
+    })    
   }
 }

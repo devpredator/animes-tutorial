@@ -43,4 +43,12 @@ export class AnimesService {
   actualizarAnime(anime: Anime) : Observable<Anime> {
     return this.httpClient.put<Anime>(`${this.baseUrl}/actualizarAnime`, anime, {headers: this.headers});
   }
+
+  /**
+   * Funcion que permite consumir el servicio para eliminar animes.
+   * @param id identificador del anime a eliminar.
+   */
+  eliminarAnime(id: number) : Observable<void> {
+   return this.httpClient.delete<void>(`${this.baseUrl}/eliminarAnime/${id}`);
+  }
 }
