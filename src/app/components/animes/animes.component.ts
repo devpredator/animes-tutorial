@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { PersonaDTO } from 'src/app/dto/PersonaDTO';
 import { Anime } from 'src/app/model/Anime';
 import { AnimesService } from 'src/app/services/animes.service';
 import Swal from 'sweetalert2';
@@ -32,6 +33,10 @@ export class AnimesComponent implements OnInit {
    */
   collectionSize = 0;
   /**
+   * persona con la informacion en la sesion.
+   */
+  personaDTO: PersonaDTO;
+  /**
    * Constructor default que inicializa el componente de animes.
    * @param animesService 
    */
@@ -39,6 +44,8 @@ export class AnimesComponent implements OnInit {
               private modalService: NgbModal) { }
 
   ngOnInit(): void {
+    this.personaDTO = JSON.parse(localStorage.getItem('personaSession'));
+    console.log(this.personaDTO);
     this.consultarAnimes();
     this.anime = new Anime();
   }

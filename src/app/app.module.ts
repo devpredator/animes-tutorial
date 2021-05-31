@@ -7,11 +7,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { AnimesComponent } from './components/animes/animes.component';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AnimesComponent
+    AnimesComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
